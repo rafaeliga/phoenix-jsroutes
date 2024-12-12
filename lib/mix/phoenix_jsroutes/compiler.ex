@@ -70,7 +70,7 @@ defmodule Mix.Compilers.Phoenix.JsRoutes do
       entries =
         entries ++
           Enum.map(stale, fn {module, dest} ->
-            {module, module.module_info[:md5], dest}
+            {module, module.module_info()[:md5], dest}
           end)
 
       write_manifest(manifest, :lists.usort(entries))
@@ -94,7 +94,7 @@ defmodule Mix.Compilers.Phoenix.JsRoutes do
   defp stale?(_, {nil, nil, nil}), do: true
 
   defp stale?(module, {_, hash, _}) do
-    module.module_info[:md5] != hash
+    module.module_info()[:md5] != hash
   end
 
   defp output_changed?(dest, {_, _, manifest_dest}) do

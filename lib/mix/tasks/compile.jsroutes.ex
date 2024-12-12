@@ -66,11 +66,11 @@ defmodule Mix.Tasks.Compile.Jsroutes do
   end
 
   defp routes(router, config) do
-    unless router.__routes__ do
+    unless router.__routes__() do
       raise_invalid_router(router)
     end
 
-    Enum.filter(router.__routes__, fn route ->
+    Enum.filter(router.__routes__(), fn route ->
       route_has_helper?(route) && match_filters?(route, config)
     end)
   end
